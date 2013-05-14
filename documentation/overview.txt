@@ -1,0 +1,232 @@
+===================
+Django remember_me
+===================
+
+
+A Django_ application that provides a login form with a Remember Me checkbox.
+Use this in place of `django.contrib.auth.views.login`_.
+
+.. _Django: http://www.djangoproject.com/
+.. _views.login documentation: http://docs.djangoproject.com/en/1.2/topics/auth/#django.contrib.auth.login
+
+
+Overview
+========
+
+This application enables a commonly needed website feature, the Remember Me
+login form.  The Remember Me feature allows a user to select a Remember Me
+checkbox on the website login form.  When checked the user will be "remembered"
+between browser sessions.  If not checked the user will be "forgotten" between
+browser sessions and will need to login when the website is next accessed.
+
+This can be useful for users if they will be accessing your website from
+insecure locations such as in internet cafe or public library.
+
+Of course some discipline still needs to be used by the user when in an
+insecure situation, they will need to have not checked the Remember Me checkbox
+and quit the web browser to log out of the website.
+
+
+Installation
+============
+
+In order to use django-remember_me, you will need to have a functioning
+installation of Django v1.2.7 or newer in the 1.2.X series.  It will probably
+work on Django versions 1.2.4 - 1.2.6 but those versions haven't been tested.
+
+There are three basic ways to install django-remember_me: automatically
+installing a package using Python's package-management tools, manually
+installing a package, and installing from a Mercurial checkout.
+
+
+Using a package-management tool
+-------------------------------
+
+The easiest way by far to install django-remember_me and most other Python
+software is by using an automated package-management tool, so if you're not
+already familiar with the available tools for Python, now's as good a time as
+any to get started.
+
+The most popular option currently is `easy_install`_; refer to its
+documentation to see how to get it set up. Once you've got it, you'll be able
+to simply type::
+
+    easy_install django-remember_me
+
+And it will handle the rest.
+
+Another option that's currently gaining steam is `pip`_. Once again, you'll
+want to refer to its documentation to get up and running, but once you have
+you'll be able to type::
+
+    pip install django-remember_me
+
+And you'll be done.
+
+
+Manually installing the v0.2d0 package
+-----------------------------------
+
+If you'd prefer to do things the old-fashioned way, you can manually download
+the `django-remember_me v0.2d0 package`_ from the Python Package Index. This
+will get you a file named "django-remember_me-0.2.tar.gz" which you can
+unpack (double-click on the file on most operating systems) to create a
+directory named "django-remember_me-0.2". Inside will be a script named
+"setup.py"; running::
+
+    python setup.py install
+
+will install django-remember_me (though keep in mind that this defaults to a
+system-wide installation, and so may require administrative privileges on your
+computer).
+
+
+Installing from a Mercurial checkout
+------------------------------------
+
+If you have `Mercurial`_ installed on your computer, you can also obtain a
+complete copy of django-remember_me by typing::
+
+    hg clone https://django-remember-me.googlecode.com/hg/ django-remember_me
+
+Inside the resulting "django-remember_me" directory will be a directory named
+"remember_me", which is the actual Python module for this application; you can
+symlink it from somewhere on your Python path. If you prefer, you can use the
+setup.py script in the "django-remember_me" directory to perform a normal
+installation, but using a symlink offers easy upgrades: simply running
+``hg pull -u`` inside the django-remember_me directory will fetch updates from
+the main repository and apply them to your local copy.
+
+
+.. _easy_install: http://peak.telecommunity.com/DevCenter/EasyInstall
+.. _pip: http://pypi.python.org/pypi/pip/
+.. _django-remember_me v0.2d0 package: http://pypi.python.org/pypi/django-remember_me/0.2
+.. _Mercurial: http://www.selenic.com/mercurial/wiki/
+
+
+Basic use
+=========
+
+To use the remember_me application with default settings, you'll need to do the
+following:
+
+1. Add ``remember_me`` to the ``INSTALLED_APPS`` setting of your Django project.
+
+2. Create the necessary templates (see the section on templates below for
+   details).
+
+3. Add this url function call to your site's root URLConf::
+   
+        url (
+            r'^accounts/login/$',
+            'remember_me.views.remember_me_login',
+            name = 'remember_me_login',
+            ),
+       
+        *If you are using other applications such as James Bennett's
+        django-registration that have url patterns for login, you'll want to
+        place this pattern above those for django-remember_me to work.
+
+
+Templates used by django-remember_me
+=====================================
+
+The view included in django-remember_me makes use of one template:
+
+* ``registration/login.html`` displays the login form for users to log in.
+
+An example of this template is not provided; you will need to create it
+yourself. See the `views.login documentation`_ for details on available context
+variables.
+
+.. _views.login documentation: http://docs.djangoproject.com/en/1.2/topics/auth/#django.contrib.auth.views.login
+
+
+How it works
+============
+
+Using the recommended default configuration, the URL ``/accounts/login/`` will
+map to the view ``remember_me.views.remember_me_login``, which displays a login
+form (an instance of ``remember_me.forms.AuthenticationRememberMeForm``); this
+form asks for a username, password, and whether to remember the user or not. If
+Remember Me is checked then the user will be "remembered" between browser
+sessions. Otherwise, the user will be "forgotten" between browser sessions.
+
+
+Forms
+=====
+
+``AuthenticationRememberMeForm``
+--------------------------------
+
+Subclass of ``AuthenticationForm``_ which adds a remember me checkbox.
+
+
+.. _AuthenticationForm: http://docs.djangoproject.com/en/1.2/topics/auth/#django.contrib.auth.forms.AuthenticationForm
+
+
+Views
+=====
+
+One view is included which handles the process of logging in a user; the view
+is found in ``remember_me.views``.
+
+
+``remember_me_login``
+---------------------
+
+Log in a user.  This view is a slightly modified version of
+``Django's auth application login view``_.  It adds code to handle the Remember
+Me feature.  Please see ``view.login documentation``_ for context variables and
+other details.
+
+.. _Django's login view: https://github.com/django/django/blob/1.2.7/django/contrib/auth/views.py#L25
+.. _ view.login documentation: http://docs.djangoproject.com/en/1.2/topics/auth/#django.contrib.auth.views.login
+
+
+Development
+===========
+
+The `latest released version`_ of this application is v0.1.1, and is quite
+stable; it's already been deployed on a number of sites. You can also obtain
+the absolute freshest code from `the development repository_`, but be warned
+that the development code may not always be backwards-compatible, and may well
+contain bugs that haven't yet been fixed.
+
+This document covers the v0.2d0 release of django-remember_me; new features
+introduced in the development trunk will be added to the documentation at the
+time of the next packaged release.
+
+.. _latest released version: http://pypi.python.org/pypi/django-remember_me/0.1.1
+.. _the development repository: http://code.google.com/p/django-remember-me/source/browse/
+
+
+Changes from previous versions
+==============================
+
+v0.1.1 added ability to specify a different form class for remember_me_login
+view function
+
+v0.1 was missing a RequestSite import which would cause an error if you didn't
+use the sites framework.
+
+
+Dependencies
+============
+
+The only dependencies for this application are a functioning install of Django
+v1.2. or newer and, of course, a Django project in which you'd like to use it.
+
+Your Django project should have ``django.contrib.auth`` and optionally
+``django.contrib.sites`` in its ``INSTALLED_APPS`` setting.
+
+
+If you spot a bug
+=================
+
+Head over to this application's `project page on Google Code`_ and check
+`the issues list`_ to see if it's already been reported. If not, open a new
+issue and I'll do my best to respond quickly.
+
+.. _project page on Google Code: http://code.google.com/p/django-remember-me/
+.. _the issues list: http://code.google.com/p/django-remember-me/issues/list

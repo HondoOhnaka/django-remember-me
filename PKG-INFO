@@ -1,0 +1,20 @@
+Metadata-Version: 1.0
+Name: django-remember_me
+Version: 0.2d0
+Summary: A Django application that provides a login form with a Remember Me checkbox.
+Home-page: http://code.google.com/p/django-remember-me/
+Author: creecode
+Author-email: creecode@gmail.com
+License: BSD
+Download-URL: http://django-remember-me.googlecode.com/files/django-remember_me-0.2d0.tar.gz
+Description: UNKNOWN
+Platform: UNKNOWN
+Classifier: Development Status :: 2 - Pre-Alpha
+Classifier: Environment :: Web Environment
+Classifier: Framework :: Django
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Natural Language :: English
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Topic :: Utilities

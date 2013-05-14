@@ -1,0 +1,10 @@
+=======
+Credits
+=======
+
+
+The structure for the documentation of this software was cribbed from
+`James Bennett's django-registration`_.  It is enormously helpful to me to be
+able to use James' work as a guide!
+
+.. _django_registration: http://bitbucket.org/ubernostrum/django-registration/
